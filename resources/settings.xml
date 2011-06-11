@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<settings>
+
+  <!-- General -->
+  
+	<category label="30247">
+    
+		<setting id="username" type="text" label="30200" default="" />
+    
+		<setting id="user_password" type="text" option="hidden" label="30201" enable="!eq(-1,)" default="" />
+    
+		<setting id="downloadPath" type="folder" label="30207" default="" />
+  
+	</category>
+  
+
+</settings>

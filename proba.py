@@ -22,7 +22,7 @@ var3 = re.findall(re.compile('<td class="name"><span class="title"><a href="/tor
 listIterator = []
 listIterator[:] = range(0, 10)
 for i in listIterator:
-    print var3[i]
+    print var3[i][1]
     print("\n")
 
 

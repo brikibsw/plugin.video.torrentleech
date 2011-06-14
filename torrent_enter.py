@@ -4,8 +4,7 @@ var3 = re.findall(re.compile('<td class="name"><span class="title"><a href="/tor
 listIterator = []
 listIterator[:] = range(0, 10)
 for i in listIterator:
-    var4 = ('/torrent/'+var3[i])
-    opentorrent = opener.open('http://www.torrentleech.org'+var4)
+    opentorrent = opener.open('http://www.torrentleech.org/torrent/'+var3[i])
     readtorrent = opentorrent.read()
     torrentname = re.findall(re.compile('<td class="label">Torrent Name</td><td>(.+?)</td>'), readtorrent)
     print torrentname, var3[i]

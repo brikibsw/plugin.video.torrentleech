@@ -23,7 +23,7 @@ def getSubcate(url):
 def getTorrents(url):
 		resp1 = opener.open(url)
 		var2 = resp1.read()
-		var3 = re.findall(re.compile('<td class="name"><span class="title"><a href="/torrent/(.+?)">(.+?)</a>'), var2)
+		var3 = re.compile('<td class="name"><span class="title"><a href="/torrent/(.+?)">(.+?)</a>').findall(var2)
 		listIterator = []
 		listIterator[:] = range(0, 10)
 		for i in listIterator:

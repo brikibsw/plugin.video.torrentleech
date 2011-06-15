@@ -1,5 +1,5 @@
-import urllib,urllib2,re,os, cookielib
-import xbmcplugin,xbmcgui,xbmcaddon
+import string, urllib2, urllib, re, cookielib, xbmc, xbmcgui, xbmcplugin, sys, os, traceback, xbmcaddon, string, threading
+from BeautifulSoup import BeautifulSoup
 
 __settings__ = xbmcaddon.Addon(id='plugin.video.torrentleech')
 
@@ -8,31 +8,44 @@ user_password = __settings__.getSetting('user_password')
 downloadPath = __settings__.getSetting('downloadPath')
 home = __settings__.getAddonInfo('path')
 icon = xbmc.translatePath( os.path.join( home, 'icon.png' ) )
-
-
+exitFlag = 0
+currentPage = 0
+print 'downloadPath: ' + downloadPath
 
 def Categories():
 		addDir('Video HD','video_hd',1,icon)
 		addDir('Video BRrip','video_brrip',1,icon)
+		addDir('Video DVDrip','video_dvdrip',1,icon)
+		
+def mesnotloged(self):
+	dialog = xbmcgui.Dialog()
+	dialog.ok(" Error", " You are not looged in ")
 
+def mesloged(self):
+	dialog = xbmcgui.Dialog()
+	dialog.ok(" Wellcome back", " You are looged in ")
+	
+def downloaded(self):
+	dialog = xbmcgui.Dialog()
+	dialog.ok(" Torrent has been", " downloaded ")
+		
 def getSubcate(url):
 		if url == 'video_hd':
 				url = 'http://www.torrentleech.org/torrents/browse/index/categories/13'
 				resp1 = opener.open(url)
 				var2 = resp1.read()
-				var3 = re.findall(re.compile('<td class="name"><span class="title"><a href="/torrent/(.+?)">(.+?)</a>'), var2)
-				listIterator = []
-				listIterator[:] = range(0, 5)
-				for i in listIterator:
-					name = var3[i][1]
-					url = 'http://www.torrentleech.org/torrent/'+var3[i][0]
-					resp1 = opener.open(url)
-					vars2 = resp1.read()
-					icon1 = re.findall(re.compile('<a href="http://static.torrentleech.org/images/covers/(.+?)"'), vars2)
-					icon = 'http://static.torrentleech.org/images/covers/'+icon1[0]
-					print icon
-					print url
-					addDir(name,url,3,icon)
+				soup = BeautifulSoup(var2)
+				for item in soup.findAll('td', attrs={'class' : "quickdownload"}):
+					links=item.findAll('a')
+					link = re.findall(re.compile('<a href="/download/(.+?)"><img src="(.+?)".+?/></a>'), '['+str(links)+']')
+					for ilink in link:
+						ilink1 = str(ilink).split(',')
+						t = str(ilink[0]).split('/')
+						tid = t[0]
+						name = t[1]
+						icon = ilink[1]
+						url = tid
+						addDir(name,url,4,icon)
 		elif url == 'video_brrip':
 				url = 'http://www.torrentleech.org/torrents/browse/index/categories/14'
 				resp1 = opener.open(url)
@@ -47,10 +60,27 @@ def getSubcate(url):
 					vars2 = resp1.read()
 					icon1 = re.findall(re.compile('<a href="http://static.torrentleech.org/images/covers/(.+?)"'), vars2)
 					icon = 'http://static.torrentleech.org/images/covers/'+icon1[0]
-					print icon
+					url = str(re.findall(re.compile('<form action="/download/(.+?)" method="get">'), vars2))
 					print url
 					addDir(name,url,3,icon)
-				
+		elif url == 'video_dvdrip':
+				url = 'http://www.torrentleech.org/torrents/browse/index/categories/10'
+				resp1 = opener.open(url)
+				var2 = resp1.read()
+				var3 = re.findall(re.compile('<td class="name"><span class="title"><a href="/torrent/(.+?)">(.+?)</a>'), var2)
+				listIterator = []
+				listIterator[:] = range(0, 5)
+				for i in listIterator:
+					name = var3[i][1]
+					url = 'http://www.torrentleech.org/torrent/'+var3[i][0]
+					resp1 = opener.open(url)
+					vars2 = resp1.read()
+					icon1 = re.findall(re.compile('<a href="http://static.torrentleech.org/images/covers/(.+?)"'), vars2)
+					icon = 'http://static.torrentleech.org/images/covers/'+icon1[0]
+					url = str(re.findall(re.compile('<form action="/download/(.+?)" method="get">'), vars2))
+					print url
+					addDir(name,url,3,icon)
+					
 def getTorrents(url):
 		resp1 = opener.open(url)
 		var2 = resp1.read()
@@ -68,7 +98,6 @@ def getTorrents(url):
 			print url
 			addDir(name,url,3,icon)
 
-
 def showTorrent(name,url):
 		resp1 = opener.open(url)
 		var2 = resp1.read()
@@ -77,6 +106,31 @@ def showTorrent(name,url):
 		print icon
 		addDir(name,url,3,icon)
 
+def DOWNLOAD(url):
+	t = 'http://www.torrentleech.org/download/'+url 
+	t1 = t.replace("['", "")
+	torrent_url = t1.replace("']", "")
+	t2 = url.split('/')
+	torrent_name = t2[1].replace("']", "")
+	print torrent_name
+	print torrent_url
+	torrent_file = urllib2.urlopen(torrent_url)
+	output = open(downloadPath+torrent_name,'wb')
+	output.write(torrent_file.read())
+	output.close()
+	downloaded('')
+	
+def DOWN(name,url):
+	torrent_url = 'http://www.torrentleech.org/download/'+url+'/'+name
+	torrent_name = name
+	print torrent_name
+	print torrent_url
+	torrent_file = urllib2.urlopen(torrent_url)
+	output = open(downloadPath+torrent_name,'wb')
+	output.write(torrent_file.read())
+	output.close()
+	downloaded('')
+	
 def get_params():
 		param=[]
 		paramstring=sys.argv[2]
@@ -95,7 +149,6 @@ def get_params():
 								
 		return param
 
-
 def addDir(name,url,mode,iconimage):
 		u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
 		ok=True
@@ -103,7 +156,6 @@ def addDir(name,url,mode,iconimage):
 		liz.setInfo( type="Video", infoLabels={ "Title": name } )
 		ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
 		return ok
-		
 			
 params=get_params()
 url=None
@@ -123,7 +175,7 @@ try:
 except:
 		pass
 
-if mode==1 or mode==2 or mode==3 or mode==4:
+if mode==None or mode==1 or mode==2 or mode==3 or mode==4:
 	cj = cookielib.LWPCookieJar()
 	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 	urllib2.install_opener(opener)
@@ -133,6 +185,11 @@ if mode==1 or mode==2 or mode==3 or mode==4:
 	resp = opener.open('http://www.torrentleech.org/user/account/login', data)
 	var1 = resp.read()
 	resp.close()
+	loged = re.findall(re.compile('<span class="memberbar_alt">(.+?)</span>'), var1)
+	if len(loged)<=0 and mode==None:
+		mesnotloged('')
+	elif len(loged)>0 and mode==None:
+		mesloged('')
 
 print "Mode: "+str(mode)
 print "URL: "+str(url)
@@ -152,12 +209,10 @@ elif mode==2:
 		
 elif mode==3:
 		print""
-		showTorrent(name,url)
+		DOWNLOAD(url)
 		
 elif mode==4:
-    print 'url before: ' + url
-    url = url + getUserInput('Enter Searchstring', '')
-    print 'url after: ' + url
+		print""
+		DOWN(name,url)
 		
-xbmcplugin.setContent(int(sys.argv[1]), 'movies')
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

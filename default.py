@@ -13,9 +13,9 @@ currentPage = 0
 print 'downloadPath: ' + downloadPath
 
 def Categories():
-		addDir('Video HD','video_hd',1,icon)
-		addDir('Video BRrip','video_brrip',1,icon)
-		addDir('Video DVDrip','video_dvdrip',1,icon)
+		addDir('Video HD','video_hd',1,'http://static2.torrentleech.org/images/categories/13.png')
+		addDir('Video BRrip','video_brrip',1,'http://static2.torrentleech.org/images/categories/14.png')
+		addDir('Video DVDrip','video_dvdrip',1,'http://static2.torrentleech.org/images/categories/10.png')
 		
 def mesnotloged(self):
 	dialog = xbmcgui.Dialog()
@@ -23,7 +23,7 @@ def mesnotloged(self):
 
 def mesloged(self):
 	dialog = xbmcgui.Dialog()
-	dialog.ok(" Wellcome back", " You are looged in ")
+	dialog.ok(" Wellcome back "+username, " You are looged in ")
 	
 def downloaded(self):
 	dialog = xbmcgui.Dialog()
@@ -43,83 +43,42 @@ def getSubcate(url):
 						t = str(ilink[0]).split('/')
 						tid = t[0]
 						name = t[1]
-						icon = ilink[1]
+						icon = 'http://static2.torrentleech.org/images/categories/13.png'
 						url = tid
 						addDir(name,url,4,icon)
 		elif url == 'video_brrip':
 				url = 'http://www.torrentleech.org/torrents/browse/index/categories/14'
 				resp1 = opener.open(url)
 				var2 = resp1.read()
-				var3 = re.findall(re.compile('<td class="name"><span class="title"><a href="/torrent/(.+?)">(.+?)</a>'), var2)
-				listIterator = []
-				listIterator[:] = range(0, 5)
-				for i in listIterator:
-					name = var3[i][1]
-					url = 'http://www.torrentleech.org/torrent/'+var3[i][0]
-					resp1 = opener.open(url)
-					vars2 = resp1.read()
-					icon1 = re.findall(re.compile('<a href="http://static.torrentleech.org/images/covers/(.+?)"'), vars2)
-					icon = 'http://static.torrentleech.org/images/covers/'+icon1[0]
-					url = str(re.findall(re.compile('<form action="/download/(.+?)" method="get">'), vars2))
-					print url
-					addDir(name,url,3,icon)
+				soup = BeautifulSoup(var2)
+				for item in soup.findAll('td', attrs={'class' : "quickdownload"}):
+					links=item.findAll('a')
+					link = re.findall(re.compile('<a href="/download/(.+?)"><img src="(.+?)".+?/></a>'), '['+str(links)+']')
+					for ilink in link:
+						ilink1 = str(ilink).split(',')
+						t = str(ilink[0]).split('/')
+						tid = t[0]
+						name = t[1]
+						icon = 'http://static2.torrentleech.org/images/categories/14.png'
+						url = tid
+						addDir(name,url,4,icon)
 		elif url == 'video_dvdrip':
 				url = 'http://www.torrentleech.org/torrents/browse/index/categories/10'
 				resp1 = opener.open(url)
 				var2 = resp1.read()
-				var3 = re.findall(re.compile('<td class="name"><span class="title"><a href="/torrent/(.+?)">(.+?)</a>'), var2)
-				listIterator = []
-				listIterator[:] = range(0, 5)
-				for i in listIterator:
-					name = var3[i][1]
-					url = 'http://www.torrentleech.org/torrent/'+var3[i][0]
-					resp1 = opener.open(url)
-					vars2 = resp1.read()
-					icon1 = re.findall(re.compile('<a href="http://static.torrentleech.org/images/covers/(.+?)"'), vars2)
-					icon = 'http://static.torrentleech.org/images/covers/'+icon1[0]
-					url = str(re.findall(re.compile('<form action="/download/(.+?)" method="get">'), vars2))
-					print url
-					addDir(name,url,3,icon)
-					
-def getTorrents(url):
-		resp1 = opener.open(url)
-		var2 = resp1.read()
-		var3 = re.compile('<td class="name"><span class="title"><a href="/torrent/(.+?)">(.+?)</a>').findall(var2)
-		listIterator = []
-		listIterator[:] = range(0, 5)
-		for i in listIterator:
-			name = var3[i][1]
-			url = 'http://www.torrentleech.org/torrent/'+var3[i][0]
-			resp1 = opener.open(url)
-			vars2 = resp1.read()
-			icon1 = re.findall(re.compile('<a href="http://static.torrentleech.org/images/covers/(.+?)"'), vars2)
-			icon = 'http://static.torrentleech.org/images/covers/'+icon1[0]
-			print icon
-			print url
-			addDir(name,url,3,icon)
+				soup = BeautifulSoup(var2)
+				for item in soup.findAll('td', attrs={'class' : "quickdownload"}):
+					links=item.findAll('a')
+					link = re.findall(re.compile('<a href="/download/(.+?)"><img src="(.+?)".+?/></a>'), '['+str(links)+']')
+					for ilink in link:
+						ilink1 = str(ilink).split(',')
+						t = str(ilink[0]).split('/')
+						tid = t[0]
+						name = t[1]
+						icon = 'http://static2.torrentleech.org/images/categories/10.png'
+						url = tid
+						addDir(name,url,4,icon)
 
-def showTorrent(name,url):
-		resp1 = opener.open(url)
-		var2 = resp1.read()
-		icon1 = re.findall(re.compile('<a href="http://static.torrentleech.org/images/covers/(.+?)"'), var2)
-		icon = 'http://static.torrentleech.org/images/covers/'+icon1[0]
-		print icon
-		addDir(name,url,3,icon)
-
-def DOWNLOAD(url):
-	t = 'http://www.torrentleech.org/download/'+url 
-	t1 = t.replace("['", "")
-	torrent_url = t1.replace("']", "")
-	t2 = url.split('/')
-	torrent_name = t2[1].replace("']", "")
-	print torrent_name
-	print torrent_url
-	torrent_file = urllib2.urlopen(torrent_url)
-	output = open(downloadPath+torrent_name,'wb')
-	output.write(torrent_file.read())
-	output.close()
-	downloaded('')
-	
 def DOWN(name,url):
 	torrent_url = 'http://www.torrentleech.org/download/'+url+'/'+name
 	torrent_name = name

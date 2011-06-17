@@ -15,7 +15,10 @@ print 'downloadPath: ' + downloadPath
 def Categories():
 		addDir('Video HD','video_hd',1,'http://static2.torrentleech.org/images/categories/13.png')
 		addDir('Video BRrip','video_brrip',1,'http://static2.torrentleech.org/images/categories/14.png')
-		addDir('Video DVDrip','video_dvdrip',1,'http://static2.torrentleech.org/images/categories/10.png')
+		addDir('Video DVDrip','video_dvdrip',1,'http://static2.torrentleech.org/images/categories/11.png')
+		addDir('Video R5','video_r5',1,'http://static2.torrentleech.org/images/categories/10.png')
+		addDir('Video TS/TC','video_tstc',1,'http://static2.torrentleech.org/images/categories/9.png')
+		addDir('Video CAM','video_cam',1,'http://static2.torrentleech.org/images/categories/8.png')
 		
 def mesnotloged(self):
 	dialog = xbmcgui.Dialog()
@@ -31,53 +34,137 @@ def downloaded(self):
 		
 def getSubcate(url):
 		if url == 'video_hd':
-				url = 'http://www.torrentleech.org/torrents/browse/index/categories/13'
-				resp1 = opener.open(url)
-				var2 = resp1.read()
-				soup = BeautifulSoup(var2)
-				for item in soup.findAll('td', attrs={'class' : "quickdownload"}):
-					links=item.findAll('a')
-					link = re.findall(re.compile('<a href="/download/(.+?)"><img src="(.+?)".+?/></a>'), '['+str(links)+']')
-					for ilink in link:
-						ilink1 = str(ilink).split(',')
-						t = str(ilink[0]).split('/')
-						tid = t[0]
-						name = t[1]
-						icon = 'http://static2.torrentleech.org/images/categories/13.png'
-						url = tid
-						addDir(name,url,4,icon)
+			url = 'http://www.torrentleech.org/torrents/browse/index/categories/13'
+			resp1 = opener.open(url)
+			link = resp1.read()
+			resp1.close()
+			soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+			torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
+			for torrent in torrents:
+					try:
+							s = torrent('td')[4]
+							size = ''.join(s.findAll(text=True))
+							se = torrent('td')[6]
+							sed = ''.join(se.findAll(text=True))
+							le = torrent('td')[7]
+							lec = ''.join(le.findAll(text=True))
+							na = torrent('td')[1]('a')[0]
+							name = ''.join(na.findAll(text=True))
+							url = torrent('td')[2]('a')[0]['href']
+							icon = torrent('td')[0]('img')[0]['src']
+							addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+					except:
+							pass
 		elif url == 'video_brrip':
 				url = 'http://www.torrentleech.org/torrents/browse/index/categories/14'
 				resp1 = opener.open(url)
-				var2 = resp1.read()
-				soup = BeautifulSoup(var2)
-				for item in soup.findAll('td', attrs={'class' : "quickdownload"}):
-					links=item.findAll('a')
-					link = re.findall(re.compile('<a href="/download/(.+?)"><img src="(.+?)".+?/></a>'), '['+str(links)+']')
-					for ilink in link:
-						ilink1 = str(ilink).split(',')
-						t = str(ilink[0]).split('/')
-						tid = t[0]
-						name = t[1]
-						icon = 'http://static2.torrentleech.org/images/categories/14.png'
-						url = tid
-						addDir(name,url,4,icon)
+				link = resp1.read()
+				resp1.close()
+				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
+				for torrent in torrents:
+						try:
+								s = torrent('td')[4]
+								size = ''.join(s.findAll(text=True))
+								se = torrent('td')[6]
+								sed = ''.join(se.findAll(text=True))
+								le = torrent('td')[7]
+								lec = ''.join(le.findAll(text=True))
+								na = torrent('td')[1]('a')[0]
+								name = ''.join(na.findAll(text=True))
+								url = torrent('td')[2]('a')[0]['href']
+								icon = torrent('td')[0]('img')[0]['src']
+								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+						except:
+								pass
 		elif url == 'video_dvdrip':
+				url = 'http://www.torrentleech.org/torrents/browse/index/categories/11'
+				resp1 = opener.open(url)
+				link = resp1.read()
+				resp1.close()
+				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
+				for torrent in torrents:
+						try:
+								s = torrent('td')[4]
+								size = ''.join(s.findAll(text=True))
+								se = torrent('td')[6]
+								sed = ''.join(se.findAll(text=True))
+								le = torrent('td')[7]
+								lec = ''.join(le.findAll(text=True))
+								na = torrent('td')[1]('a')[0]
+								name = ''.join(na.findAll(text=True))
+								url = torrent('td')[2]('a')[0]['href']
+								icon = torrent('td')[0]('img')[0]['src']
+								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+						except:
+								pass
+		elif url == 'video_r5':
 				url = 'http://www.torrentleech.org/torrents/browse/index/categories/10'
 				resp1 = opener.open(url)
-				var2 = resp1.read()
-				soup = BeautifulSoup(var2)
-				for item in soup.findAll('td', attrs={'class' : "quickdownload"}):
-					links=item.findAll('a')
-					link = re.findall(re.compile('<a href="/download/(.+?)"><img src="(.+?)".+?/></a>'), '['+str(links)+']')
-					for ilink in link:
-						ilink1 = str(ilink).split(',')
-						t = str(ilink[0]).split('/')
-						tid = t[0]
-						name = t[1]
-						icon = 'http://static2.torrentleech.org/images/categories/10.png'
-						url = tid
-						addDir(name,url,4,icon)
+				link = resp1.read()
+				resp1.close()
+				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
+				for torrent in torrents:
+						try:
+								s = torrent('td')[4]
+								size = ''.join(s.findAll(text=True))
+								se = torrent('td')[6]
+								sed = ''.join(se.findAll(text=True))
+								le = torrent('td')[7]
+								lec = ''.join(le.findAll(text=True))
+								na = torrent('td')[1]('a')[0]
+								name = ''.join(na.findAll(text=True))
+								url = torrent('td')[2]('a')[0]['href']
+								icon = torrent('td')[0]('img')[0]['src']
+								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+						except:
+								pass
+		elif url == 'video_tstc':
+				url = 'http://www.torrentleech.org/torrents/browse/index/categories/9'
+				resp1 = opener.open(url)
+				link = resp1.read()
+				resp1.close()
+				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
+				for torrent in torrents:
+						try:
+								s = torrent('td')[4]
+								size = ''.join(s.findAll(text=True))
+								se = torrent('td')[6]
+								sed = ''.join(se.findAll(text=True))
+								le = torrent('td')[7]
+								lec = ''.join(le.findAll(text=True))
+								na = torrent('td')[1]('a')[0]
+								name = ''.join(na.findAll(text=True))
+								url = torrent('td')[2]('a')[0]['href']
+								icon = torrent('td')[0]('img')[0]['src']
+								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+						except:
+								pass
+		elif url == 'video_cam':
+				url = 'http://www.torrentleech.org/torrents/browse/index/categories/8'
+				resp1 = opener.open(url)
+				link = resp1.read()
+				resp1.close()
+				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
+				for torrent in torrents:
+						try:
+								s = torrent('td')[4]
+								size = ''.join(s.findAll(text=True))
+								se = torrent('td')[6]
+								sed = ''.join(se.findAll(text=True))
+								le = torrent('td')[7]
+								lec = ''.join(le.findAll(text=True))
+								na = torrent('td')[1]('a')[0]
+								name = ''.join(na.findAll(text=True))
+								url = torrent('td')[2]('a')[0]['href']
+								icon = torrent('td')[0]('img')[0]['src']
+								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+						except:
+								pass
 
 def DOWN(name,url):
 	torrent_url = 'http://www.torrentleech.org/download/'+url+'/'+name

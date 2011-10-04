@@ -26,7 +26,7 @@ def mesnotloged(self):
 
 def mesloged(self):
 	dialog = xbmcgui.Dialog()
-	dialog.ok(" Wellcome back "+username, " You are looged in ")
+	dialog.ok(" Wellcome back ", username+" You are looged in ")
 	
 def downloaded(self):
 	dialog = xbmcgui.Dialog()
@@ -167,8 +167,9 @@ def getSubcate(url):
 								pass
 
 def DOWN(name,url):
-	torrent_url = 'http://www.torrentleech.org/download/'+url+'/'+name
-	torrent_name = name
+	torrent_url = 'http://www.torrentleech.org'+url
+	tn = url.split('/')
+	torrent_name = tn[3]
 	print torrent_name
 	print torrent_url
 	torrent_file = urllib2.urlopen(torrent_url)

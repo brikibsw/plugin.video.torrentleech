@@ -40,7 +40,7 @@ def getSubcate(url):
 			resp1.close()
 			soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 			torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-			for torrent in torrents[0:21]:
+			for torrent in torrents[0:31]:
 					try:
 							s = torrent('td')[4]
 							size = ''.join(s.findAll(text=True))
@@ -57,7 +57,9 @@ def getSubcate(url):
 							resp1.close()
 							soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 							icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
-							addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+							rating1 = soup.find('div', attrs={'class' : "rating"})
+							rating = ''.join(rating1.findAll(text=True))
+							addDir(name+' | Rating: '+rating+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 					except:
 							pass
 		elif url == 'video_brrip':
@@ -67,7 +69,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents[0:21]:
+				for torrent in torrents[0:31]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -84,7 +86,9 @@ def getSubcate(url):
 								resp1.close()
 								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
-								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+								rating1 = soup.find('div', attrs={'class' : "rating"})
+								rating = ''.join(rating1.findAll(text=True))
+								addDir(name+' | Rating: '+rating+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
 		elif url == 'video_dvdrip':
@@ -94,7 +98,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents[0:21]:
+				for torrent in torrents[0:31]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -111,7 +115,9 @@ def getSubcate(url):
 								resp1.close()
 								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
-								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+								rating1 = soup.find('div', attrs={'class' : "rating"})
+								rating = ''.join(rating1.findAll(text=True))
+								addDir(name+' | Rating: '+rating+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
 		elif url == 'video_r5':
@@ -121,7 +127,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents[0:21]:
+				for torrent in torrents[0:31]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -138,7 +144,9 @@ def getSubcate(url):
 								resp1.close()
 								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
-								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+								rating1 = soup.find('div', attrs={'class' : "rating"})
+								rating = ''.join(rating1.findAll(text=True))
+								addDir(name+' | Rating: '+rating+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
 		elif url == 'video_tstc':
@@ -148,7 +156,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents[0:21]:
+				for torrent in torrents[0:31]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -165,7 +173,9 @@ def getSubcate(url):
 								resp1.close()
 								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
-								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+								rating1 = soup.find('div', attrs={'class' : "rating"})
+								rating = ''.join(rating1.findAll(text=True))
+								addDir(name+' | Rating: '+rating+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
 		elif url == 'video_cam':
@@ -175,7 +185,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents[0:21]:
+				for torrent in torrents[0:31]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -192,7 +202,9 @@ def getSubcate(url):
 								resp1.close()
 								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
-								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
+								rating1 = soup.find('div', attrs={'class' : "rating"})
+								rating = ''.join(rating1.findAll(text=True))
+								addDir(name+' | Rating: '+rating+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
 

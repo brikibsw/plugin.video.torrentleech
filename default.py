@@ -26,7 +26,7 @@ def mesnotloged(self):
 
 def mesloged(self):
 	dialog = xbmcgui.Dialog()
-	dialog.ok(" Wellcome back "+username, " You are looged in ")
+	dialog.ok(" Wellcome back ", username+" You are looged in ")
 	
 def downloaded(self):
 	dialog = xbmcgui.Dialog()
@@ -40,7 +40,7 @@ def getSubcate(url):
 			resp1.close()
 			soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 			torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-			for torrent in torrents:
+			for torrent in torrents[0:21]:
 					try:
 							s = torrent('td')[4]
 							size = ''.join(s.findAll(text=True))
@@ -51,7 +51,12 @@ def getSubcate(url):
 							na = torrent('td')[1]('a')[0]
 							name = ''.join(na.findAll(text=True))
 							url = torrent('td')[2]('a')[0]['href']
-							icon = torrent('td')[0]('img')[0]['src']
+							ic = 'http://www.torrentleech.org/torrent/'+torrent('td')[2]('a')[0]['href'].split ('/')[2]
+							resp1 = opener.open(ic)
+							link = resp1.read()
+							resp1.close()
+							soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+							icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
 							addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 					except:
 							pass
@@ -62,7 +67,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents:
+				for torrent in torrents[0:21]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -73,7 +78,12 @@ def getSubcate(url):
 								na = torrent('td')[1]('a')[0]
 								name = ''.join(na.findAll(text=True))
 								url = torrent('td')[2]('a')[0]['href']
-								icon = torrent('td')[0]('img')[0]['src']
+								ic = 'http://www.torrentleech.org/torrent/'+torrent('td')[2]('a')[0]['href'].split ('/')[2]
+								resp1 = opener.open(ic)
+								link = resp1.read()
+								resp1.close()
+								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
 								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
@@ -84,7 +94,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents:
+				for torrent in torrents[0:21]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -95,7 +105,12 @@ def getSubcate(url):
 								na = torrent('td')[1]('a')[0]
 								name = ''.join(na.findAll(text=True))
 								url = torrent('td')[2]('a')[0]['href']
-								icon = torrent('td')[0]('img')[0]['src']
+								ic = 'http://www.torrentleech.org/torrent/'+torrent('td')[2]('a')[0]['href'].split ('/')[2]
+								resp1 = opener.open(ic)
+								link = resp1.read()
+								resp1.close()
+								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
 								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
@@ -106,7 +121,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents:
+				for torrent in torrents[0:21]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -117,7 +132,12 @@ def getSubcate(url):
 								na = torrent('td')[1]('a')[0]
 								name = ''.join(na.findAll(text=True))
 								url = torrent('td')[2]('a')[0]['href']
-								icon = torrent('td')[0]('img')[0]['src']
+								ic = 'http://www.torrentleech.org/torrent/'+torrent('td')[2]('a')[0]['href'].split ('/')[2]
+								resp1 = opener.open(ic)
+								link = resp1.read()
+								resp1.close()
+								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
 								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
@@ -128,7 +148,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents:
+				for torrent in torrents[0:21]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -139,7 +159,12 @@ def getSubcate(url):
 								na = torrent('td')[1]('a')[0]
 								name = ''.join(na.findAll(text=True))
 								url = torrent('td')[2]('a')[0]['href']
-								icon = torrent('td')[0]('img')[0]['src']
+								ic = 'http://www.torrentleech.org/torrent/'+torrent('td')[2]('a')[0]['href'].split ('/')[2]
+								resp1 = opener.open(ic)
+								link = resp1.read()
+								resp1.close()
+								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
 								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
@@ -150,7 +175,7 @@ def getSubcate(url):
 				resp1.close()
 				soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
 				torrents = soup.find('table', attrs={'id' : "torrenttable"})('tr')
-				for torrent in torrents:
+				for torrent in torrents[0:21]:
 						try:
 								s = torrent('td')[4]
 								size = ''.join(s.findAll(text=True))
@@ -161,14 +186,20 @@ def getSubcate(url):
 								na = torrent('td')[1]('a')[0]
 								name = ''.join(na.findAll(text=True))
 								url = torrent('td')[2]('a')[0]['href']
-								icon = torrent('td')[0]('img')[0]['src']
+								ic = 'http://www.torrentleech.org/torrent/'+torrent('td')[2]('a')[0]['href'].split ('/')[2]
+								resp1 = opener.open(ic)
+								link = resp1.read()
+								resp1.close()
+								soup = BeautifulSoup(link, convertEntities=BeautifulSoup.HTML_ENTITIES)
+								icon = soup.find('div', attrs={'id' : "cover"})('a')[0]['href']
 								addDir(name+' | Size: '+size+' | Sed: '+sed+' | Leech: '+lec,url,4,icon)
 						except:
 								pass
 
 def DOWN(name,url):
-	torrent_url = 'http://www.torrentleech.org/download/'+url+'/'+name
-	torrent_name = name
+	torrent_url = 'http://www.torrentleech.org'+url
+	tn = url.split('/')
+	torrent_name = tn[3]
 	print torrent_name
 	print torrent_url
 	torrent_file = urllib2.urlopen(torrent_url)
